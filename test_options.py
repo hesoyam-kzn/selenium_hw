@@ -1,6 +1,8 @@
 import time, pytest, math
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 
 # @pytest.fixture()
@@ -16,8 +18,10 @@ def test_options(browser, lnk):
     browser.get(f'https://stepik.org/lesson/{lnk}/step/1')
     browser.implicitly_wait(5)
 
+    auth = WebDriverWait(browser, 100).until(EC.element_to_be_clickable((By.CLASS_NAME, 'ember-view.navbar__auth.navbar__auth_login.st-link.st-link_style_button')))
+    auth.click()
     #Authorization
-    browser.find_element(By.CLASS_NAME, 'ember-view.navbar__auth.navbar__auth_login.st-link.st-link_style_button').click()
+    # browser.find_element(By.CLASS_NAME, 'ember-view.navbar__auth.navbar__auth_login.st-link.st-link_style_button').click()
     browser.find_element(By.CSS_SELECTOR, '.ember-text-field.ember-view.sign-form__input[type="email"]').send_keys('dimaswat@gmail.com')
     browser.find_element(By.CSS_SELECTOR, '.ember-text-field.ember-view.sign-form__input[type="password"]').send_keys('@Lvbnhbq397')
     browser.find_element(By.CLASS_NAME, 'sign-form__btn.button_with-loader').click()
@@ -25,7 +29,7 @@ def test_options(browser, lnk):
     time.sleep(5)
     text_f = browser.find_element(By.CSS_SELECTOR, '.ember-text-area.ember-view.textarea.string-quiz__textarea')
     text_f.send_keys(str(answer))
-    # time.sleep(100)
+    time.sleep(100)
     # browser.find_element(By.CLASS_NAME, 'attempt-wrapper-button').click()
 
 
